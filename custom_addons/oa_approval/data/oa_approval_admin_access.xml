@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- OA 管理員權限設定已在 security/oa_approval_security.xml 中處理 -->
+    </data>
+</odoo>

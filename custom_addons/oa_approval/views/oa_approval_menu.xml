@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- OA Approval Root Menu -->
+        <menuitem id="menu_oa_approval_root" name="OA Approval" sequence="200" web_icon="oa_approval,static/description/icon.png"/>
+
+        <!-- Forms Management -->
+        <menuitem id="menu_oa_approval_forms" name="Forms" parent="menu_oa_approval_root" sequence="10"/>
+
+        <!-- Create New Form (for users) -->
+        <menuitem id="menu_oa_approval_create" name="Create" parent="menu_oa_approval_forms" sequence="10"
+                  action="action_oa_form_category_user"/>
+
+        <!-- My Forms -->
+        <menuitem id="menu_oa_approval_my_forms" name="My Forms" parent="menu_oa_approval_forms" sequence="20"
+                  action="oa_form_instance_action"/>
+
+        <!-- All Forms (Managers) -->
+        <menuitem id="menu_oa_approval_all_forms" name="All Forms" parent="menu_oa_approval_forms" sequence="30"
+                  action="oa_form_instance_action_all" groups="oa_approval.group_oa_manager"/>
+
+        <!-- Configuration (Admin only) -->
+        <menuitem id="menu_oa_approval_config" name="Configuration" parent="menu_oa_approval_root" sequence="100" groups="base.group_system"/>
+
+        <!-- Form Categories Management -->
+        <menuitem id="menu_oa_approval_config_categories" name="Form Categories" parent="menu_oa_approval_config" sequence="10"
+                  action="action_oa_form_category"/>
+
+        <!-- Form Templates Management -->
+        <menuitem id="menu_oa_approval_config_templates" name="Form Templates" parent="menu_oa_approval_config" sequence="20"
+                  action="action_oa_form_template"/>
+
+        <!-- Approval Chains Management -->
+        <menuitem id="menu_oa_approval_config_chains" name="Approval Chains" parent="menu_oa_approval_config" sequence="30"
+                  action="action_oa_approval_chain"/>
+    </data>
+</odoo>

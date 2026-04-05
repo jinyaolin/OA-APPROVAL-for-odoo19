@@ -1,0 +1,228 @@
+/* ============================================
+   OA Approval Form - Improved User Experience
+   ============================================ */
+
+/* Make single-row fields look like a regular form */
+.o_form_view_oa_improved .o_field_one2many .o_list_view {
+    border: none;
+}
+
+.o_form_view_oa_improved .o_field_one2many .o_list_view thead {
+    display: none !important;
+}
+
+.o_form_view_oa_improved .o_field_one2many .o_list_view tbody tr.o_data_row {
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.o_form_view_oa_improved .o_field_one2many .o_list_view tbody tr.o_data_row:hover {
+    background-color: transparent !important;
+}
+
+/* Section header styling */
+.o_form_view_oa_improved .o_list_view tbody tr[data-display-type="line_section"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin: 20px 0 10px 0;
+    border-radius: 6px;
+}
+
+.o_form_view_oa_improved .o_list_view tbody tr[data-display-type="line_section"] td {
+    padding: 12px 16px;
+    border: none;
+}
+
+/* Field labels */
+.o_form_view_oa_improved .o_list_view tbody tr:not([data-display-type="line_section"]) td:first-child {
+    width: 30%;
+    font-weight: 500;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-radius: 4px 0 0 4px;
+    padding: 10px 16px;
+}
+
+/* Field values */
+.o_form_view_oa_improved .o_list_view tbody tr:not([data-display-type="line_section"]) td:not(:first-child) {
+    padding: 8px 16px;
+    background-color: white;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Input fields styling */
+.o_form_view_oa_improved .o_list_view input,
+.o_form_view_oa_improved .o_list_view textarea,
+.o_form_view_oa_improved .o_list_view select {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.o_form_view_oa_improved .o_list_view input:focus,
+.o_form_view_oa_improved .o_list_view textarea:focus,
+.o_form_view_oa_improved .o_list_view select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Required field indicator */
+.o_form_view_oa_improved .o_list_view .o_required_modifier::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Empty state styling */
+.o_form_view_oa_improved .text-center.text-muted {
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    margin: 20px 0;
+}
+
+/* Notebook styling */
+.o_form_view_oa_improved .nav-tabs {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+    padding: 10px 15px 0;
+    border-radius: 8px 8px 0 0;
+}
+
+.o_form_view_oa_improved .nav-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.o_form_view_oa_improved .nav-tabs .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.o_form_view_oa_improved .nav-tabs .nav-link.active {
+    color: #007bff;
+    background-color: #fff;
+    border-bottom: 3px solid #007bff;
+}
+
+/* Multi-row section styling */
+.o_form_view_oa_improved .o_field_one2many.o_field_widget_no_label {
+    margin-top: 10px;
+}
+
+/* Sheet styling */
+.o_form_view_oa_improved .oe_sheet {
+    max-width: 1200px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .o_form_view_oa_improved .o_list_view tbody tr.o_data_row {
+        flex-direction: column;
+    }
+
+    .o_form_view_oa_improved .o_list_view tbody tr.o_data_row td {
+        width: 100% !important;
+        border-radius: 0 !important;
+        padding: 8px !important;
+    }
+
+    .o_form_view_oa_improved .o_list_view tbody tr.o_data_row td:first-child {
+        background-color: #f8f9fa;
+        color: #6c757d;
+        font-weight: 600;
+    }
+
+    .o_form_view_oa_improved .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    .o_form_view_oa_improved .oe_button_box,
+    .o_form_view_oa_improved .nav-tabs,
+    .o_form_view_oa_improved .o_chatter {
+        display: none !important;
+    }
+
+    .o_form_view_oa_improved .notebook-content {
+        border: none;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.o_form_view_oa_improved .o_field_one2many {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Badge styling */
+.o_form_view_oa_improved .badge {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Statusbar styling */
+.o_form_view_oa_improved .o_statusbar_status {
+    padding: 10px 0;
+}
+
+/* Section header styling (alternative) */
+.o_form_view_oa_improved .oa_section_header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+}
+
+/* File upload styling */
+.o_form_view_oa_improved .o_field_binary_file {
+    border: 2px dashed #dee2e6;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+    background-color: #f8f9fa;
+    transition: all 0.2s;
+}
+
+.o_form_view_oa_improved .o_field_binary_file:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Textarea enhancement */
+.o_form_view_oa_improved textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Date picker styling */
+.o_form_view_oa_improved .o_datepicker,
+.o_form_view_oa_improved .o_datetime_picker {
+    min-width: 200px;
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Wizard Form View -->
+        <record id="oa_approval_chain_view_wizard_view_form" model="ir.ui.view">
+            <field name="name">oa.approval.chain.view.wizard.form</field>
+            <field name="model">oa.approval.chain.view.wizard</field>
+            <field name="arch" type="xml">
+                <form string="審核鏈詳情">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description" readonly="1" nolabel="1" placeholder="無說明"/>
+                        </group>
+                        <notebook>
+                            <page string="審核步驟" name="steps">
+                                <field name="step_summary" readonly="1" nolabel="1" placeholder="無審核步驟"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button string="關閉" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Wizard Action -->
+        <record id="oa_approval_chain_view_wizard_action" model="ir.actions.act_window">
+            <field name="name">查看審核鏈</field>
+            <field name="res_model">oa.approval.chain.view.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

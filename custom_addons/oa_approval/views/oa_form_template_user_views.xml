@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- User-friendly Template List View -->
+        <record id="view_oa_form_template_user_list" model="ir.ui.view">
+            <field name="name">oa.form.template.user.list</field>
+            <field name="model">oa.form.template</field>
+            <field name="arch" type="xml">
+                <list string="Select Form Template">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="category_id"/>
+                    <button name="action_create_form" string="Create Form" type="object"
+                            icon="fa-plus" class="btn-primary"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- User-friendly Template Form View (Readonly) -->
+        <record id="view_oa_form_template_user_form" model="ir.ui.view">
+            <field name="name">oa.form.template.user.form</field>
+            <field name="model">oa.form.template</field>
+            <field name="arch" type="xml">
+                <form string="Form Template" create="0" edit="0" delete="0">
+                    <header>
+                        <button name="action_create_form" string="Create Form" type="object" class="btn-primary"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="btn-secondary" special="cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="category_id" readonly="1"/>
+                                <field name="instance_count" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="approval_chain_id" readonly="1"/>
+                                <field name="version" readonly="1"/>
+                            </group>
+                        </group>
+                        <field name="description" readonly="1"/>
+                        <notebook>
+                            <page string="Form Fields" name="fields">
+                                <field name="field_ids" readonly="1">
+                                    <list>
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="field_type"/>
+                                        <field name="required"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- User-friendly Template Action -->
+        <record id="action_oa_form_template_user" model="ir.actions.act_window">
+            <field name="name">Select Form Template</field>
+            <field name="res_model">oa.form.template</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('state', '=', 'published')]</field>
+            <field name="context">{'form_view_ref': 'view_oa_form_template_user_form', 'tree_view_ref': 'view_oa_form_template_user_list'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Select a form template to create a new form.
+                </p>
+            </field>
+        </record>
+
+        <!-- Update Categories Menu to Use User-friendly Template View -->
+        <record id="action_oa_form_category_user" model="ir.actions.act_window">
+            <field name="name">Form Types</field>
+            <field name="res_model">oa.form.category</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Select a form category to see available templates.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

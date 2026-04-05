@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Odoo
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.log
+.odoo/odoo.conf
+
+# Database
+*.dump
+*.sql
+*.sql.gz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Export files
+oa_approval_export/
+*.tar.gz
+
+# Sensitive data
+odoo.conf.local
+.env
+*.secret
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Custom scripts (not part of module)
+create_*.py
+fix_*.py
+assign_*.py
+verify_*.sh
+export_*.sh
+RESET_GUIDE.md
+
+# Keep only essential documentation (these should be included)

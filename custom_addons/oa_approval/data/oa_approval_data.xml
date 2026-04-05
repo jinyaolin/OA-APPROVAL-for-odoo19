@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- 預設表單分類 -->
+        <record id="oa_category_hr" model="oa.form.category">
+            <field name="name">人事行政</field>
+            <field name="code">HR</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="oa_category_finance" model="oa.form.category">
+            <field name="name">財務</field>
+            <field name="code">FIN</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="oa_category_it" model="oa.form.category">
+            <field name="name">資訊科技</field>
+            <field name="code">IT</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- 預設審核鏈：直屬主管審核 -->
+        <record id="oa_chain_manager" model="oa.approval.chain">
+            <field name="name">直屬主管審核</field>
+            <field name="code">MANAGER</field>
+        </record>
+
+        <record id="oa_chain_manager_step1" model="oa.approval.step">
+            <field name="chain_id" ref="oa_chain_manager"/>
+            <field name="sequence">1</field>
+            <field name="name">直屬主管審核</field>
+            <field name="approver_type">manager</field>
+            <field name="timeout_hours">72</field>
+        </record>
+
+        <!-- 預設審核鏈：主管+部門經理 -->
+        <record id="oa_chain_manager_dept" model="oa.approval.chain">
+            <field name="name">主管及部門經理審核</field>
+            <field name="code">MGR_DEPT</field>
+        </record>
+
+        <record id="oa_chain_manager_dept_step1" model="oa.approval.step">
+            <field name="chain_id" ref="oa_chain_manager_dept"/>
+            <field name="sequence">1</field>
+            <field name="name">直屬主管審核</field>
+            <field name="approver_type">manager</field>
+            <field name="timeout_hours">48</field>
+        </record>
+
+        <record id="oa_chain_manager_dept_step2" model="oa.approval.step">
+            <field name="chain_id" ref="oa_chain_manager_dept"/>
+            <field name="sequence">2</field>
+            <field name="name">部門經理審核</field>
+            <field name="approver_type">department_head</field>
+            <field name="timeout_hours">72</field>
+        </record>
+
+        <!-- 預設範本：請假申請單 -->
+        <record id="oa_template_leave" model="oa.form.template">
+            <field name="name">請假申請單</field>
+            <field name="code">LEAVE</field>
+            <field name="category_id" ref="oa_category_hr"/>
+            <field name="description">用於申請各類假期的表單</field>
+            <field name="approval_chain_id" ref="oa_chain_manager"/>
+            <field name="state">published</field>
+        </record>
+
+        <record id="oa_template_leave_field1" model="oa.form.field">
+            <field name="template_id" ref="oa_template_leave"/>
+            <field name="name">假別</field>
+            <field name="field_type">selection</field>
+            <field name="code">leave_type</field>
+            <field name="technical_name">leave_type</field>
+            <field name="sequence">10</field>
+            <field name="required">True</field>
+            <field name="selection_options">事假,病假,特休,婚假,喪假,產假,陪產病</field>
+        </record>
+
+        <record id="oa_template_leave_field2" model="oa.form.field">
+            <field name="template_id" ref="oa_template_leave"/>
+            <field name="name">起始日期</field>
+            <field name="field_type">date</field>
+            <field name="code">start_date</field>
+            <field name="technical_name">start_date</field>
+            <field name="sequence">20</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_leave_field3" model="oa.form.field">
+            <field name="template_id" ref="oa_template_leave"/>
+            <field name="name">結束日期</field>
+            <field name="field_type">date</field>
+            <field name="code">end_date</field>
+            <field name="technical_name">end_date</field>
+            <field name="sequence">30</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_leave_field4" model="oa.form.field">
+            <field name="template_id" ref="oa_template_leave"/>
+            <field name="name">請假時數</field>
+            <field name="field_type">float</field>
+            <field name="code">leave_hours</field>
+            <field name="technical_name">leave_hours</field>
+            <field name="sequence">40</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_leave_field5" model="oa.form.field">
+            <field name="template_id" ref="oa_template_leave"/>
+            <field name="name">請假事由</field>
+            <field name="field_type">text</field>
+            <field name="code">reason</field>
+            <field name="technical_name">reason</field>
+            <field name="sequence">50</field>
+            <field name="required">True</field>
+        </record>
+
+        <!-- 預設範本：報銷申請單 -->
+        <record id="oa_template_expense" model="oa.form.template">
+            <field name="name">報銷申請單</field>
+            <field name="code">EXPENSE</field>
+            <field name="category_id" ref="oa_category_finance"/>
+            <field name="description">用於申請費用報銷</field>
+            <field name="approval_chain_id" ref="oa_chain_manager_dept"/>
+            <field name="state">published</field>
+        </record>
+
+        <record id="oa_template_expense_field1" model="oa.form.field">
+            <field name="template_id" ref="oa_template_expense"/>
+            <field name="name">報銷類型</field>
+            <field name="field_type">selection</field>
+            <field name="code">expense_type</field>
+            <field name="technical_name">expense_type</field>
+            <field name="sequence">10</field>
+            <field name="required">True</field>
+            <field name="selection_options">交通費,誤餐費,辦公用品,客戶招待費,其他</field>
+        </record>
+
+        <record id="oa_template_expense_field2" model="oa.form.field">
+            <field name="template_id" ref="oa_template_expense"/>
+            <field name="name">金額</field>
+            <field name="field_type">float</field>
+            <field name="code">amount</field>
+            <field name="technical_name">amount</field>
+            <field name="sequence">20</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_expense_field3" model="oa.form.field">
+            <field name="template_id" ref="oa_template_expense"/>
+            <field name="name">發生日期</field>
+            <field name="field_type">date</field>
+            <field name="code">expense_date</field>
+            <field name="technical_name">expense_date</field>
+            <field name="sequence">30</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_expense_field4" model="oa.form.field">
+            <field name="template_id" ref="oa_template_expense"/>
+            <field name="name">說明</field>
+            <field name="field_type">text</field>
+            <field name="code">description</field>
+            <field name="technical_name">description</field>
+            <field name="sequence">40</field>
+            <field name="required">True</field>
+        </record>
+
+        <record id="oa_template_expense_field5" model="oa.form.field">
+            <field name="template_id" ref="oa_template_expense"/>
+            <field name="name">附件</field>
+            <field name="field_type">file</field>
+            <field name="code">attachment</field>
+            <field name="technical_name">attachment</field>
+            <field name="sequence">50</field>
+            <field name="required">False</field>
+        </record>
+
+        <!-- Mail Activity Type: 審核活動 -->
+        <record id="mail_activity_approval" model="mail.activity.type">
+            <field name="name">待審核</field>
+            <field name="sequence">1</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="delay_count">0</field>
+            <field name="delay_unit">days</field>
+            <field name="delay_from">current_date</field>
+        </record>
+
+    </data>
+</odoo>

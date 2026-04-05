@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Email Template for Approval Notification -->
+        <record id="email_template_approval_notification" model="mail.template">
+            <field name="name">OA審核通知</field>
+            <field name="model_id" ref="model_oa_form_instance"/>
+            <field name="subject">待審核通知：${object.template_id.name} - ${object.name}</field>
+            <field name="email_from">${object.env.user.email_formatted | safe}</field>
+            <field name="lang"></field>
+            <field name="body_html" type="html">
+<![CDATA[
+<div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333;">
+    <p>您好，</p>
+
+    <p>您有一個新的表單需要審核：</p>
+
+    <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單編號</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單類型</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.template_id.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">申請人</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.applicant_id.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">提交時間</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.submit_date}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">目前步驟</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.current_step_name or ''}</td>
+        </tr>
+    </table>
+
+    <p>請點擊下方連結查看詳情並進行審核：</p>
+
+    <p style="text-align: center; margin: 30px 0;">
+        <a href="${object.get_form_url() or ''}"
+           style="background-color: #00a09d; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
+           查看表單並審核
+        </a>
+    </p>
+
+    <p style="color: #666; font-size: 12px;">
+        此郵件由系統自動發送，請勿直接回覆。<br/>
+        如有疑問，請聯繫申請人或系統管理員。
+    </p>
+</div>
+]]>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!-- Email Template for Approved Notification -->
+        <record id="email_template_approval_approved" model="mail.template">
+            <field name="name">OA審核通過通知</field>
+            <field name="model_id" ref="model_oa_form_instance"/>
+            <field name="subject">表單審核通過：${object.template_id.name} - ${object.name}</field>
+            <field name="email_from">${object.env.user.email_formatted | safe}</field>
+            <field name="lang"></field>
+            <field name="body_html" type="html">
+<![CDATA[
+<div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333;">
+    <p>您好 ${object.applicant_id.name or ''}，</p>
+
+    <p>您的表單已經審核通過：</p>
+
+    <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單編號</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單類型</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.template_id.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">完成時間</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.complete_date}</td>
+        </tr>
+    </table>
+
+    <p style="text-align: center; margin: 30px 0;">
+        <a href="${object.get_form_url() or ''}"
+           style="background-color: #28a745; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
+           查看表單詳情
+        </a>
+    </p>
+</div>
+]]>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <!-- Email Template for Rejected Notification -->
+        <record id="email_template_approval_rejected" model="mail.template">
+            <field name="name">OA審核駁回通知</field>
+            <field name="model_id" ref="model_oa_form_instance"/>
+            <field name="subject">表單審核駁回：${object.template_id.name} - ${object.name}</field>
+            <field name="email_from">${object.env.user.email_formatted | safe}</field>
+            <field name="lang"></field>
+            <field name="body_html" type="html">
+<![CDATA[
+<div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333;">
+    <p>您好 ${object.applicant_id.name or ''}，</p>
+
+    <p>您的表單已被駁回：</p>
+
+    <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單編號</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">表單類型</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.template_id.name}</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; background-color: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">審核時間</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${object.complete_date}</td>
+        </tr>
+    </table>
+
+    <p style="text-align: center; margin: 30px 0;">
+        <a href="${object.get_form_url() or ''}"
+           style="background-color: #dc3545; color: white; padding: 12px 30px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
+           查看表單詳情
+        </a>
+    </p>
+</div>
+]]>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>

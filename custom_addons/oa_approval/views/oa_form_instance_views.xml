@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="oa_form_instance_view_form" model="ir.ui.view">
+            <field name="name">oa.form.instance.form</field>
+            <field name="model">oa.form.instance</field>
+            <field name="arch" type="xml">
+                <form string="表單執行個體" create="0">
+                    <field name="id" invisible="1"/>
+                    <header>
+                        <button name="action_submit" string="提交" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                        <button name="action_approve" string="核准" type="object" invisible="state != 'pending'" class="btn-primary"/>
+                        <button name="action_reject" string="駁回" type="object" invisible="state != 'pending'" class="btn-danger"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="applicant_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="template_id" readonly="1"/>
+                                <field name="submit_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="審核流程">
+                                <field name="approval_chain_id" readonly="1"/>
+                                <button string="查看審核流程詳情" type="object" name="action_view_approval_chain"
+                                        class="btn-link" invisible="not approval_chain_id"/>
+                            </group>
+                            <group>
+                                <div class="alert alert-info" role="alert" invisible="not approval_chain_id">
+                                    <strong>目前狀態：</strong>
+                                    <span>步驟 </span>
+                                    <field name="current_step" readonly="1" nolabel="1" class="badge-primary"/>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="表單內容" name="content">
+                                <field name="field_value_ids" readonly="state != 'draft'">
+                                    <list create="0" delete="0">
+                                        <field name="field_display_name" readonly="1"/>
+                                        <field name="display_value" readonly="1"/>
+                                    </list>
+                                    <form string="編輯欄位值">
+                                        <group>
+                                            <field name="field_display_name" readonly="1"/>
+                                            <field name="field_type" invisible="1" readonly="1"/>
+                                            <field name="available_options" invisible="1" readonly="1"/>
+                                            <!-- Char -->
+                                            <label for="value_char" invisible="field_type != 'char'"/>
+                                            <div invisible="field_type != 'char'">
+                                                <field name="value_char" nolabel="1"/>
+                                            </div>
+                                            <!-- Selection -->
+                                            <label for="value_selection_option_id" invisible="field_type != 'selection'"/>
+                                            <div invisible="field_type != 'selection'">
+                                                <field name="value_selection_option_id" nolabel="1"
+                                                       domain="[('field_id', '=', field_id)]"
+                                                       placeholder="請選擇選項"/>
+                                                <field name="value_char" invisible="1"/>
+                                            </div>
+                                            <!-- Text -->
+                                            <label for="value_text" invisible="field_type != 'text'"/>
+                                            <div invisible="field_type != 'text'">
+                                                <field name="value_text" nolabel="1"/>
+                                            </div>
+                                            <!-- Integer -->
+                                            <label for="value_integer" invisible="field_type != 'integer'"/>
+                                            <div invisible="field_type != 'integer'">
+                                                <field name="value_integer" nolabel="1"/>
+                                            </div>
+                                            <!-- Float -->
+                                            <label for="value_float" invisible="field_type != 'float'"/>
+                                            <div invisible="field_type != 'float'">
+                                                <field name="value_float" nolabel="1"/>
+                                            </div>
+                                            <!-- Date -->
+                                            <label for="value_date" invisible="field_type != 'date'"/>
+                                            <div invisible="field_type != 'date'">
+                                                <field name="value_date" nolabel="1"/>
+                                            </div>
+                                            <!-- Datetime -->
+                                            <label for="value_datetime" invisible="field_type != 'datetime'"/>
+                                            <div invisible="field_type != 'datetime'">
+                                                <field name="value_datetime" nolabel="1"/>
+                                            </div>
+                                            <!-- Employee -->
+                                            <label for="value_employee_id" invisible="field_type != 'employee'"/>
+                                            <div invisible="field_type != 'employee'">
+                                                <field name="value_employee_id" nolabel="1"/>
+                                            </div>
+                                            <!-- Department -->
+                                            <label for="value_department_id" invisible="field_type != 'department'"/>
+                                            <div invisible="field_type != 'department'">
+                                                <field name="value_department_id" nolabel="1"/>
+                                            </div>
+                                            <!-- File -->
+                                            <label for="value_file" invisible="field_type != 'file'"/>
+                                            <div invisible="field_type != 'file'">
+                                                <field name="value_file" nolabel="1"/>
+                                                <field name="value_filename" invisible="1"/>
+                                            </div>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="審核記錄" name="approval_records">
+                                <field name="approval_record_ids" readonly="1">
+                                    <list>
+                                        <field name="step_id"/>
+                                        <field name="approver_id"/>
+                                        <field name="action"/>
+                                        <field name="approval_date"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="oa_form_instance_view_tree" model="ir.ui.view">
+            <field name="name">oa.form.instance.tree</field>
+            <field name="model">oa.form.instance</field>
+            <field name="arch" type="xml">
+                <list string="表單執行個體">
+                    <field name="name"/>
+                    <field name="template_id"/>
+                    <field name="applicant_id"/>
+                    <field name="state" decoration-info="state == 'draft'" decoration-warning="state == 'pending'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'"/>
+                    <field name="submit_date"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="oa_form_instance_action" model="ir.actions.act_window">
+            <field name="name">我的表單</field>
+            <field name="res_model">oa.form.instance</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('applicant_id.user_id', '=', uid)]</field>
+            <field name="context">{'create': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    還沒有表單嗎？前往
+                    <a data-category="o_text_gradient" href="#menu_id=155&amp;action=225">表單範本</a>
+                    選擇一個範本來創建表單。
+                </p>
+            </field>
+        </record>
+
+        <record id="oa_form_instance_action_all" model="ir.actions.act_window">
+            <field name="name">所有表單</field>
+            <field name="res_model">oa.form.instance</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'create': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    沒有表單記錄
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
